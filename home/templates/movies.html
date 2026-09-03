@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Prime Video - Movies</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            color: #00a8e1;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .back {
+            margin-left: auto;
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .back:hover {
+            color: #00a8e1;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            padding: 40px;
+        }
+
+        .container h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* SEARCH */
+
+        .search-container {
+            display: flex;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px 0 0 5px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #00a8e1;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            background: #00a8e1;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .search-btn:hover {
+            background: #0089b8;
+        }
+
+        /* MOVIE GRID */
+
+        .movies {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        /* MOVIE CARD */
+
+        .movie {
+            background: #111;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .movie:hover {
+            transform: scale(1.05);
+        }
+
+        /* IMAGE */
+
+        .movie img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* INFORMATION */
+
+        .info {
+            padding: 15px;
+        }
+
+        .info h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .info p {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        /* WATCH BUTTON */
+
+        .watch {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 9px 16px;
+            background: #00a8e1;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .watch:hover {
+            background: #0089b8;
+        }
+
+        /* NO MOVIES */
+
+        .no-movies {
+            color: #aaa;
+            font-size: 18px;
+        }
+
+        /* SEARCH RESULT */
+
+        .search-result {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1200px) {
+
+            .movies {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+        }
+
+        @media (max-width: 900px) {
+
+            .movies {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .container {
+                padding: 20px;
+            }
+
+            .movies {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .movies {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-section {
+    margin-bottom: 30px;
+}
+
+.search-container {
+    display: flex;
+    max-width: 750px;
+}
+
+.genre-select {
+    padding: 12px 15px;
+    background: #222;
+    color: white;
+    border: 1px solid #444;
+    font-size: 15px;
+    outline: none;
+}
+
+.genre-select:focus {
+    border-color: #00a8e1;
+}
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            prime video
+        </div>
+
+        <a href="/" class="back">
+            ← Home
+        </a>
+
+    </nav>
+
+
+    <!-- CONTENT -->
+
+    <div class="container">
+
+        <h1>
+            Movies
+        </h1>
+
+
+        <!-- SEARCH -->
+
+        <div class="filter-section">
+
+    <form method="GET" class="search-container">
+
+        <input
+            type="text"
+            name="search"
+            class="search-input"
+            placeholder="Search movies..."
+            value="{{ search }}"
+        >
+
+        <select name="genre" class="genre-select">
+
+            <option value="">
+                All Genres
+            </option>
+
+            {% for genre in genres %}
+
+            <option
+                value="{{ genre }}"
+                {% if selected_genre == genre %}selected{% endif %}
+            >
+                {{ genre }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button
+            type="submit"
+            class="search-btn"
+        >
+            🔍 Search
+        </button>
+
+    </form>
+
+</div>
+
+
+        {% if search %}
+
+        <p class="search-result">
+            Search results for: <strong>{{ search }}</strong>
+        </p>
+
+        {% endif %}
+
+
+        <!-- MOVIES -->
+
+        {% if movies %}
+
+        <div class="movies">
+
+            {% for movie in movies %}
+
+            <div class="movie">
+
+                <img
+                    src="{{ movie.bannerUrl }}"
+                    alt="{{ movie.name }}"
+                >
+
+
+                <div class="info">
+
+                    <h3>
+                        {{ movie.name }}
+                    </h3>
+
+
+                    {% if movie.genre %}
+
+                    <p>
+                        {{ movie.genre }}
+                    </p>
+
+                    {% endif %}
+
+
+                    {% if movie.releaseYear %}
+
+                    <p>
+                        {{ movie.releaseYear }}
+                    </p>
+
+                    {% endif %}
+
+
+                    {% if movie.rating %}
+
+                    <p>
+                        ⭐ {{ movie.rating }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <a
+                        href="{% url 'movie_detail' movie.id %}"
+                        class="watch"
+                    >
+                        ▶ Watch Now
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <p class="no-movies">
+            No movies found.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

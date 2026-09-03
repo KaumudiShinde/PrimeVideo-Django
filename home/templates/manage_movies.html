@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Movies - Prime Video</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            color: #00a8e1;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .back {
+            margin-left: auto;
+            color: white;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: #00a8e1;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+        }
+
+        /* ADD BUTTON */
+
+        .add-btn {
+            background: #00a8e1;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #0089b8;
+        }
+
+        /* TABLE */
+
+        .movie-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #111;
+        }
+
+        .movie-table th {
+            background: #222;
+            color: #00a8e1;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .movie-table td {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            vertical-align: middle;
+        }
+
+        .movie-table tr:hover {
+            background: #181818;
+        }
+
+        /* POSTER */
+
+        .poster {
+            width: 70px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        /* BUTTONS */
+
+        .edit-btn,
+        .delete-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        .edit-btn {
+            background: #444;
+        }
+
+        .edit-btn:hover {
+            background: #666;
+        }
+
+        .delete-btn {
+            background: #e50914;
+        }
+
+        .delete-btn:hover {
+            background: #b20710;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            color: #aaa;
+            margin-top: 30px;
+            font-size: 18px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .container {
+                padding: 20px;
+                overflow-x: auto;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .movie-table {
+                min-width: 700px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            prime video
+        </div>
+
+        <a href="/" class="back">
+            ← Back to Home
+        </a>
+
+    </nav>
+
+
+    <!-- CONTENT -->
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>
+                Manage Movies
+            </h1>
+
+            <a href="{% url 'add_movie' %}" class="add-btn">
+                + Add Movie
+            </a>
+
+        </div>
+
+
+        {% if movies %}
+
+        <table class="movie-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Poster
+                    </th>
+
+                    <th>
+                        Movie
+                    </th>
+
+                    <th>
+                        Genre
+                    </th>
+
+                    <th>
+                        Year
+                    </th>
+
+                    <th>
+                        Rating
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for movie in movies %}
+
+                <tr>
+
+                    <td>
+
+                        <img
+                            src="{{ movie.bannerUrl }}"
+                            alt="{{ movie.name }}"
+                            class="poster"
+                        >
+
+                    </td>
+
+
+                    <td>
+                        {{ movie.name }}
+                    </td>
+
+
+                    <td>
+                        {{ movie.genre }}
+                    </td>
+
+
+                    <td>
+                        {{ movie.releaseYear }}
+                    </td>
+
+
+                    <td>
+                        ⭐ {{ movie.rating }}
+                    </td>
+
+
+                    <td>
+
+                        <a
+                            href="{% url 'edit_movie' movie.id %}"
+                            class="edit-btn"
+                        >
+                            ✏ Edit
+                        </a>
+
+
+                        <a
+                            href="{% url 'delete_movie' movie.id %}"
+                            class="delete-btn"
+                        >
+                            🗑 Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+        <p class="empty">
+            No movies available.
+        </p><!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Movies - Prime Video</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            height: 70px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            color: #00a8e1;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .home {
+            margin-left: auto;
+            color: white;
+            text-decoration: none;
+        }
+
+        .home:hover {
+            color: #00a8e1;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .add-movie {
+            display: inline-block;
+            background: #00a8e1;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .add-movie:hover {
+            background: #0089b8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #111;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background: #222;
+            color: #00a8e1;
+        }
+
+        td {
+            color: #ddd;
+        }
+
+        .edit-btn {
+            display: inline-block;
+            background: #444;
+            color: white;
+            text-decoration: none;
+            padding: 7px 12px;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .edit-btn:hover {
+            background: #666;
+        }
+
+        .delete-btn {
+            display: inline-block;
+            background: #e50914;
+            color: white;
+            text-decoration: none;
+            padding: 7px 12px;
+            border-radius: 4px;
+        }
+
+        .delete-btn:hover {
+            background: #b20710;
+        }
+
+        .no-movies {
+            color: #aaa;
+            margin-top: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            prime video
+        </div>
+
+        <a href="/" class="home">
+            ← Home
+        </a>
+
+    </nav>
+
+
+    <div class="container">
+
+        <h1>
+            Manage Movies
+        </h1>
+
+
+        <a
+            href="{% url 'add_movie' %}"
+            class="add-movie"
+        >
+            + Add Movie
+        </a>
+
+
+        {% if movies %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Movie Name
+                    </th>
+
+                    <th>
+                        Genre
+                    </th>
+
+                    <th>
+                        Year
+                    </th>
+
+                    <th>
+                        Rating
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for movie in movies %}
+
+                <tr>
+
+                    <td>
+                        {{ movie.id }}
+                    </td>
+
+                    <td>
+                        {{ movie.name }}
+                    </td>
+
+                    <td>
+                        {{ movie.genre }}
+                    </td>
+
+                    <td>
+                        {{ movie.releaseYear }}
+                    </td>
+
+                    <td>
+                        ⭐ {{ movie.rating }}
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{% url 'edit_movie' movie.id %}"
+                            class="edit-btn"
+                        >
+                            ✏ Edit
+                        </a>
+
+                        <a
+                            href="{% url 'delete_movie' movie.id %}"
+                            class="delete-btn"
+                        >
+                            🗑 Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p class="no-movies">
+            No movies available.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

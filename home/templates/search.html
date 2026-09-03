@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Search - Prime Video</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background: #111;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            color: #00a8e1;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .search-box input {
+            width: 350px;
+            padding: 12px;
+            background: #222;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        .search-box button {
+            padding: 12px 25px;
+            background: #00a8e1;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .movies {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .movie {
+            background: #111;
+            overflow: hidden;
+        }
+
+        .movie img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+        }
+
+        .info {
+            padding: 15px;
+        }
+
+        .info h3 {
+            margin: 0 0 10px;
+        }
+
+        .watch {
+            display: inline-block;
+            background: #00a8e1;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">
+            prime video
+        </div>
+    </div>
+
+    <div class="container">
+
+        <form method="GET" action="{% url 'search' %}" class="search-box">
+
+            <input
+                type="text"
+                name="q"
+                placeholder="Search movies..."
+                value="{{ query }}"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+        {% if query %}
+            <h2>Search results for "{{ query }}"</h2>
+        {% endif %}
+
+        <div class="movies">
+
+            {% for movie in movies %}
+
+            <div class="movie">
+
+                <img
+                    src="{{ movie.bannerUrl }}"
+                    alt="{{ movie.name }}"
+                >
+
+                <div class="info">
+
+                    <h3>{{ movie.name }}</h3>
+
+                    <p>{{ movie.genre }}</p>
+
+                    <a
+                        href="{% url 'movie_detail' movie.id %}"
+                        class="watch"
+                    >
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+                {% if query %}
+                    <p>No movies found.</p>
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

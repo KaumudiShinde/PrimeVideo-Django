@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Prime Video</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 70px;
+            background: #111;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 40px;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: #00a8e1;
+            font-size: 28px;
+            font-weight: bold;
+
+            margin-right: 45px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            margin-left: auto;
+        }
+
+        .search-box input {
+            width: 200px;
+
+            padding: 10px 14px;
+
+            background: #222;
+
+            border: 1px solid #444;
+
+            border-radius: 4px;
+
+            color: white;
+
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: #aaa;
+        }
+
+        /* ================= USER ================= */
+
+        .user-section {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-left: 20px;
+        }
+
+        .username {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        .login-btn,
+        .register-btn,
+        .logout-btn {
+
+            text-decoration: none;
+
+            padding: 8px 14px;
+
+            border-radius: 4px;
+
+            font-size: 14px;
+        }
+
+        .login-btn {
+            color: white;
+            border: 1px solid #00a8e1;
+        }
+
+        .register-btn,
+        .logout-btn {
+            background: #00a8e1;
+            color: white;
+        }
+
+        .login-btn:hover,
+        .register-btn:hover,
+        .logout-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+
+            min-height: 500px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 60px;
+
+            background:
+                linear-gradient(
+                    to right,
+                    #000 15%,
+                    rgba(0, 0, 0, 0.85) 45%,
+                    rgba(0, 0, 0, 0.25) 100%
+                ),
+                linear-gradient(
+                    to top,
+                    #000 0%,
+                    transparent 40%
+                );
+
+        }
+
+        .hero-content {
+            max-width: 550px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            color: #ccc;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            margin-bottom: 25px;
+        }
+
+        .hero-btn {
+
+            display: inline-block;
+
+            padding: 12px 24px;
+
+            background: #00a8e1;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 4px;
+
+            font-weight: bold;
+        }
+
+        .hero-btn:hover {
+            background: #008ac0;
+        }
+
+        /* ================= MOVIES ================= */
+
+        .section {
+            padding: 30px 40px;
+        }
+
+        .section-title {
+
+            font-size: 24px;
+
+            margin-bottom: 20px;
+        }
+
+        .movie-container {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 20px;
+        }
+
+        .movie-card {
+
+            background: #111;
+
+            border-radius: 6px;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.3s ease;
+
+        }
+
+        .movie-card:hover {
+
+            transform: scale(1.05);
+
+            z-index: 5;
+        }
+
+        .movie-card img {
+
+            width: 100%;
+
+            height: 260px;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .movie-info {
+
+            padding: 14px;
+        }
+
+        .movie-info h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 8px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .movie-info p {
+
+            color: #aaa;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .rating {
+
+            color: #00a8e1 !important;
+
+            font-weight: bold;
+        }
+
+        .watch-btn {
+
+            display: inline-block;
+
+            margin-top: 8px;
+
+            padding: 8px 14px;
+
+            background: #00a8e1;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 4px;
+
+            font-size: 13px;
+        }
+
+        .watch-btn:hover {
+
+            background: #008ac0;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            margin-top: 50px;
+
+            padding: 30px;
+
+            text-align: center;
+
+            background: #111;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .movie-container {
+
+                grid-template-columns:
+                    repeat(4, 1fr);
+            }
+
+        }
+
+        @media (max-width: 850px) {
+
+            .navbar {
+
+                padding: 0 20px;
+            }
+
+            .nav-links {
+
+                gap: 15px;
+            }
+
+            .search-box input {
+
+                width: 140px;
+            }
+
+            .movie-container {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .hero {
+
+                padding: 40px;
+            }
+
+            .hero-content h1 {
+
+                font-size: 38px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                height: auto;
+
+                padding: 15px;
+
+                flex-wrap: wrap;
+
+                gap: 15px;
+            }
+
+            .logo {
+
+                margin-right: 10px;
+            }
+
+            .nav-links {
+
+                order: 3;
+
+                width: 100%;
+
+                justify-content: center;
+            }
+
+            .search-box {
+
+                margin-left: auto;
+            }
+
+            .user-section {
+
+                margin-left: 0;
+            }
+
+            .movie-container {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 12px;
+            }
+
+            .section {
+
+                padding: 25px 15px;
+            }
+
+            .hero {
+
+                min-height: 400px;
+
+                padding: 30px 20px;
+            }
+
+            .hero-content h1 {
+
+                font-size: 32px;
+            }
+
+            .categories {
+                display: flex;
+                gap: 15px;
+             margin: 20px 0;
+            }
+
+            .categories a {
+                color: white;
+                text-decoration: none;
+                background: #00a8e1;
+                padding: 10px 20px;
+                border-radius: 4px;
+            }
+
+            .manage-btn {
+                display: inline-block;
+                background: #00a8e1;
+                color: white;
+                text-decoration: none;
+                padding: 10px 18px;
+                border-radius: 5px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .manage-btn:hover {
+                background: #0089b8;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+
+    <div class="logo">
+        prime video
+    </div>
+
+    {% if user.is_staff %}
+
+        <a href="{% url 'manage_movies' %}" class="manage-btn">
+        ⚙ Manage Movies
+    </a>
+
+{% endif %}
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="#movies">
+                Movies
+            </a>
+        </li>
+
+        <li>
+            <a href="#movies">
+                TV Shows
+            </a>
+        </li>
+
+        <li>
+            <a href="#movies">
+                Categories
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search movies..."
+            onkeyup="searchMovies()"
+        >
+
+    </div>
+
+    <div class="categories">
+
+        <a href="{% url 'genre_movies' 'Action' %}">
+            Action
+        </a>
+
+        <a href="{% url 'genre_movies' 'Drama' %}">
+            Drama
+        </a>
+
+        <a href="{% url 'genre_movies' 'Comedy' %}">
+            Comedy
+        </a>
+
+        <a href="{% url 'genre_movies' 'Thriller' %}">
+            Thriller
+        </a>
+
+    </div>
+
+
+    <!-- USER -->
+
+    <div class="user-section">
+
+        {% if user.is_authenticated %}
+
+            <span class="username">
+                Hello, {{ user.username }}
+            </span>
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout-btn"
+            >
+                Logout
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'login' %}"
+                class="login-btn"
+            >
+                Login
+            </a>
+
+            <a
+                href="{% url 'signup' %}"
+                class="register-btn"
+            >
+                Signup
+            </a>
+
+        {% endif %}
+
+    </div>
+
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+        <h1>
+            Welcome to Prime Video
+        </h1>
+
+        <p>
+            Watch popular movies and entertainment
+            from your favorite collection.
+        </p>
+
+        <a
+            href="#movies"
+            class="hero-btn"
+        >
+            Explore Movies
+        </a>
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= MOVIES ================= -->
+
+<section
+    class="section"
+    id="movies"
+>
+
+
+    <h2 class="section-title">
+        Popular Movies
+    </h2>
+
+
+    <div class="movie-container">
+
+
+        {% for movie in movies %}
+
+
+        <div
+            class="movie-card"
+            data-title="{{ movie.name|lower }}"
+        >
+
+
+            {% if movie.bannerUrl %}
+
+                <img
+                    src="{{ movie.bannerUrl }}"
+                    alt="{{ movie.name }}"
+                >
+
+            {% endif %}
+
+
+            <div class="movie-info">
+
+
+                <h3>
+                    {{ movie.name }}
+                </h3>
+
+
+                {% if movie.genre %}
+
+                    <p>
+                        {{ movie.genre }}
+                    </p>
+
+                {% endif %}
+
+
+                {% if movie.releaseYear %}
+
+                    <p>
+                        {{ movie.releaseYear }}
+                    </p>
+
+                {% endif %}
+
+
+                {% if movie.rating %}
+
+                    <p class="rating">
+                        ⭐ {{ movie.rating }}
+                    </p>
+
+                {% endif %}
+
+
+                <a
+                    href="{% url 'movie_detail' movie.id %}"
+                    class="watch-btn"
+                >
+                    Watch Now
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% empty %}
+
+
+        <p>
+            No movies available.
+        </p>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026 Prime Video Clone
+    </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+function searchMovies() {
+
+    const input =
+        document.getElementById("searchInput");
+
+    const searchValue =
+        input.value.toLowerCase();
+
+    const movies =
+        document.querySelectorAll(".movie-card");
+
+
+    movies.forEach(function(movie) {
+
+        const title =
+            movie.getAttribute("data-title");
+
+
+        if (title.includes(searchValue)) {
+
+            movie.style.display = "";
+
+        } else {
+
+            movie.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

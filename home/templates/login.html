@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Login - Prime Video</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #000;
+            color: white;
+
+            font-family: Arial, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 350px;
+            background: #111;
+
+            padding: 35px;
+
+            border-radius: 5px;
+        }
+
+        .logo {
+            text-align: center;
+
+            color: #00a8e1;
+
+            font-size: 28px;
+            font-weight: bold;
+
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 11px;
+
+            margin-bottom: 18px;
+
+            background: #222;
+
+            border: 1px solid #555;
+
+            color: white;
+
+            border-radius: 3px;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 12px;
+
+            background: #00a8e1;
+
+            border: none;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0089b8;
+        }
+
+        .register {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #aaa;
+        }
+
+        .register a {
+            color: #00a8e1;
+
+            text-decoration: none;
+        }
+
+        .error {
+            background: #7a1f1f;
+
+            padding: 10px;
+
+            margin-bottom: 15px;
+
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="logo">
+        prime video
+    </div>
+
+
+    <h2>Login</h2>
+
+
+    {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+        >
+
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+
+    <div class="register">
+
+        Don't have an account?
+
+        <a href="{% url 'signup' %}">
+            Register
+        </a>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

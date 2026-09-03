@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Movie - Prime Video</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            height: 65px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            color: #00a8e1;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .back {
+            margin-left: auto;
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 500px;
+            max-width: 90%;
+            margin: 100px auto;
+            background: #111;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            background: #e50914;
+        }
+
+        .delete-btn:hover {
+            background: #b20710;
+        }
+
+        .cancel-btn {
+            background: #444;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            prime video
+        </div>
+
+        <a href="{% url 'movies' %}" class="back">
+            ← Back to Movies
+        </a>
+
+    </nav>
+
+
+    <div class="container">
+
+        <h1>Delete Movie?</h1>
+
+        <p>
+            Are you sure you want to delete
+            <strong>{{ movie.name }}</strong>?
+        </p>
+
+
+        <div class="buttons">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="delete-btn">
+                    Delete
+                </button>
+
+            </form>
+
+
+            <a
+                href="{% url 'movies' %}"
+                class="cancel-btn">
+                Cancel
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
